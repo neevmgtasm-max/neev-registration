@@ -3,9 +3,1433 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>NEEV 2025 | Management Fest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --crimson: #DC143C;
+            --deep-red: #8B0000;
+            --blood: #660000;
+            --gold: #D4AF37;
+            --gold-light: #F4D03F;
+            --black: #030303;
+            --dark: #0A0A0A;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--crimson);
+            border-radius: 3px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Leaf Container */
+        .leaf-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10000;
+            overflow: hidden;
+        }
+
+        .leaf {
+            position: absolute;
+            top: -50px;
+            opacity: 0;
+            animation: leafFall linear infinite;
+        }
+
+        .leaf svg {
+            fill: var(--crimson);
+            filter: drop-shadow(0 0 5px rgba(220, 20, 60, 0.3));
+        }
+
+        @keyframes leafFall {
+            0% {
+                opacity: 0;
+                transform: translateY(0) rotate(0deg) translateX(0);
+            }
+            5% {
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) translateX(30px);
+            }
+            95% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(105vh) rotate(360deg) translateX(-30px);
+            }
+        }
+
+        /* Ambient Background */
+        .ambient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ambient::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(220, 20, 60, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(139, 0, 0, 0.06) 0%, transparent 50%);
+            animation: ambientMove 20s ease-in-out infinite;
+        }
+
+        @keyframes ambientMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-5%, 5%) rotate(5deg); }
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 25px;
+            background: rgba(220, 20, 60, 0.1);
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            border-radius: 50px;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-badge span {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .hero-kanji {
+            font-size: 6rem;
+            color: var(--crimson);
+            margin-bottom: 20px;
+            text-shadow: 0 0 80px rgba(220, 20, 60, 0.5);
+            animation: fadeIn 1.2s ease, pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.9; }
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 15vw, 10rem);
+            font-weight: 900;
+            letter-spacing: 0.3em;
+            margin-bottom: 15px;
+            background: linear-gradient(180deg, #fff 20%, rgba(255,255,255,0.6) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero-year {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--crimson);
+            letter-spacing: 1em;
+            margin-bottom: 10px;
+            animation: fadeIn 1.3s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero-college {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 2;
+            margin-bottom: 50px;
+            animation: fadeIn 1.7s ease;
+        }
+
+        .hero-college strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .prize-display {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 60px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 60px;
+            position: relative;
+            animation: fadeInUp 1.8s ease;
+        }
+
+        .prize-display::before,
+        .prize-display::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        .prize-display::before { left: 15px; }
+        .prize-display::after { right: 15px; }
+
+        .prize-display .label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .prize-display .amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Big Buttons */
+        .hero-buttons {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 2s ease;
+        }
+
+        .big-btn {
+            position: relative;
+            padding: 25px 60px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .big-btn.primary {
+            background: linear-gradient(135deg, var(--crimson), var(--deep-red));
+            color: var(--white);
+            box-shadow: 0 10px 40px rgba(220, 20, 60, 0.3);
+        }
+
+        .big-btn.secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--crimson);
+        }
+
+        .big-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.6s;
+        }
+
+        .big-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.1);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .big-btn:hover::before {
+            left: 100%;
+        }
+
+        .big-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .big-btn.primary:hover {
+            box-shadow: 0 20px 60px rgba(220, 20, 60, 0.5);
+        }
+
+        .big-btn.secondary:hover {
+            background: var(--crimson);
+            border-color: var(--crimson);
+        }
+
+        .big-btn:active::after {
+            opacity: 1;
+        }
+
+        .big-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Click Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: rippleEffect 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 20px;
+            position: relative;
+            z-index: 2;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-header .kanji {
+            font-size: 3rem;
+            color: var(--crimson);
+            opacity: 0.2;
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.2em;
+        }
+
+        .section-header p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+
+        .section-header .line {
+            width: 60px;
+            height: 2px;
+            background: var(--crimson);
+            margin: 25px auto 0;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Event Card */
+        .card {
+            background: linear-gradient(180deg, rgba(15, 15, 15, 0.9), rgba(8, 8, 8, 0.95));
+            border: 1px solid rgba(220, 20, 60, 0.15);
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(220, 20, 60, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(220, 20, 60, 0.5);
+            box-shadow: 0 25px 50px rgba(220, 20, 60, 0.15),
+                        0 0 100px rgba(220, 20, 60, 0.05);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card:active {
+            transform: translateY(-8px) scale(0.99);
+        }
+
+        .card-number {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(220, 20, 60, 0.1);
+            line-height: 1;
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .card-category {
+            display: inline-block;
+            font-size: 0.7rem;
+            color: var(--crimson);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            background: rgba(220, 20, 60, 0.1);
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        .card-prize {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.03));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card-prize .total-label {
+            font-size: 0.65rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .card-prize .total-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .prize-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .prize-split.single {
+            grid-template-columns: 1fr;
+        }
+
+        .prize-item {
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .prize-item .icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .prize-item .rank {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .prize-item .value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .card-info {
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row .label {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+
+        .info-row .value {
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .food-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: rgba(34, 139, 34, 0.1);
+            border: 1px solid rgba(34, 139, 34, 0.3);
+            color: #90EE90;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .register-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--crimson), var(--deep-red));
+            border: none;
+            color: var(--white);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .register-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: 0.5s;
+        }
+
+        .register-btn:hover {
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .register-btn:hover::before {
+            left: 100%;
+        }
+
+        .register-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, transparent, rgba(220, 20, 60, 0.02));
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .contact-card {
+            background: rgba(12, 12, 12, 0.8);
+            border: 1px solid rgba(220, 20, 60, 0.1);
+            padding: 35px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .contact-card:hover {
+            border-color: rgba(220, 20, 60, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(220, 20, 60, 0.1);
+        }
+
+        .contact-card:active {
+            transform: translateY(-5px) scale(0.99);
+        }
+
+        .contact-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--crimson);
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        .contact-person {
+            margin-bottom: 18px;
+        }
+
+        .contact-person .name {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-person a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .contact-person a:hover {
+            color: var(--crimson);
+            transform: scale(1.02);
+        }
+
+        .contact-person a:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(220, 20, 60, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--crimson);
+            letter-spacing: 0.3em;
+            margin-bottom: 20px;
+        }
+
+        .footer-info {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.85rem;
+            line-height: 2;
+        }
+
+        .footer-divider {
+            width: 50px;
+            height: 1px;
+            background: var(--crimson);
+            margin: 25px auto;
+            opacity: 0.5;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-bottom: 50px;
+            transition: all 0.4s ease;
+        }
+
+        .back-btn:hover {
+            border-color: var(--crimson);
+            color: var(--crimson);
+            transform: translateX(-5px);
+        }
+
+        .back-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 15px;
+            }
+
+            .hero-kanji {
+                font-size: 4rem;
+            }
+
+            .hero-title {
+                letter-spacing: 0.15em;
+            }
+
+            .hero-year {
+                font-size: 1.2rem;
+                letter-spacing: 0.5em;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+                letter-spacing: 0.3em;
+            }
+
+            .prize-display {
+                padding: 25px 40px;
+            }
+
+            .prize-display .amount {
+                font-size: 2.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .big-btn {
+                width: 100%;
+                padding: 20px 40px;
+            }
+
+            .section {
+                padding: 70px 15px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .card {
+                padding: 30px 25px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-kanji {
+                font-size: 3rem;
+            }
+
+            .hero-badge span {
+                font-size: 0.7rem;
+            }
+
+            .hero-college {
+                font-size: 0.85rem;
+            }
+
+            .section-header h2 {
+                letter-spacing: 0.1em;
+            }
+
+            .card-title {
+                font-size: 1.4rem;
+            }
+
+            .card-prize .total-amount {
+                font-size: 1.7rem;
+            }
+
+            .prize-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Touch Device Hover Fix */
+        @media (hover: none) {
+            .card:hover {
+                transform: none;
+            }
+            
+            .card:active {
+                transform: scale(0.98);
+                border-color: rgba(220, 20, 60, 0.5);
+            }
+        }
+    </style>
 </head>
 <body>
-    <p>website upcoming</p>
+    <!-- Leaf Container -->
+    <div class="leaf-container" id="leafContainer"></div>
+
+    <!-- Ambient Background -->
+    <div class="ambient"></div>
+    <div class="noise"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-badge">
+            <span>Department of Advertising & Sales Management</span>
+        </div>
+        
+        <div class="hero-kanji">武士道</div>
+        
+        <h1 class="hero-title">NEEV</h1>
+        <p class="hero-year">2025</p>
+        <p class="hero-subtitle">Management Fest</p>
+        
+        <p class="hero-college">
+            <strong>MAMO College</strong><br>
+            Manassery, Mukkam
+        </p>
+
+        <div class="prize-display">
+            <span class="label">Total Prize Pool</span>
+            <span class="amount">₹67,500+</span>
+        </div>
+
+        <div class="hero-buttons">
+            <button class="big-btn primary" onclick="showSection('main-events')">
+                ⚔️ Main Battles
+            </button>
+            <button class="big-btn secondary" onclick="showSection('spot-events')">
+                🎮 Quick Games
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Events Section -->
+    <section class="section" id="main-events">
+        <button class="back-btn" onclick="showHero()">← Back</button>
+        
+        <div class="section-header">
+            <div class="kanji">戦</div>
+            <h2>MAIN BATTLES</h2>
+            <p>Choose Your Arena</p>
+            <div class="line"></div>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Osaka Strategy -->
+            <div class="card animate-in">
+                <div class="card-number">01</div>
+                <span class="card-icon">🏯</span>
+                <span class="card-category">Marketing × Advertising</span>
+                <h3 class="card-title">Osaka Strategy</h3>
+                
+                <div class="card-prize">
+                    <div class="total-label">Total Prize Pool</div>
+                    <div class="total-amount">₹15,000</div>
+                    <div class="prize-split">
+                        <div class="prize-item">
+                            <div class="icon">🥇</div>
+                            <div class="rank">Winner</div>
+                            <div class="value">₹10,000</div>
+                        </div>
+                        <div class="prize-item">
+                            <div class="icon">🥈</div>
+                            <div class="rank">Runner-up</div>
+                            <div class="value">₹5,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span class="label">Registration</span>
+                        <span class="value">₹800/-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Team Size</span>
+                        <span class="value">4 Members</span>
+                    </div>
+                </div>
+
+                <div class="food-tag">🍱 Food Included</div>
+                <a href="#" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- Rise of the Shogun -->
+            <div class="card animate-in">
+                <div class="card-number">02</div>
+                <span class="card-icon">⚔️</span>
+                <span class="card-category">Best Manager</span>
+                <h3 class="card-title">Rise of the Shogun</h3>
+                
+                <div class="card-prize">
+                    <div class="total-label">Winner Takes All</div>
+                    <div class="total-amount">₹12,500</div>
+                    <div class="prize-split single">
+                        <div class="prize-item">
+                            <div class="icon">🏆</div>
+                            <div class="rank">Champion</div>
+                            <div class="value">₹12,500</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span class="label">Registration</span>
+                        <span class="value">₹350/-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Participation</span>
+                        <span class="value">Individual</span>
+                    </div>
+                </div>
+
+                <div class="food-tag">🍱 Food Included</div>
+                <a href="#" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- The Jade Prison -->
+            <div class="card animate-in">
+                <div class="card-number">03</div>
+                <span class="card-icon">🔐</span>
+                <span class="card-category">Escape Room</span>
+                <h3 class="card-title">The Jade Prison</h3>
+                
+                <div class="card-prize">
+                    <div class="total-label">Total Prize Pool</div>
+                    <div class="total-amount">₹15,000</div>
+                    <div class="prize-split">
+                        <div class="prize-item">
+                            <div class="icon">🥇</div>
+                            <div class="rank">Winner</div>
+                            <div class="value">₹10,000</div>
+                        </div>
+                        <div class="prize-item">
+                            <div class="icon">🥈</div>
+                            <div class="rank">Runner-up</div>
+                            <div class="value">₹5,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span class="label">Registration</span>
+                        <span class="value">₹800/-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Team Size</span>
+                        <span class="value">4 Members</span>
+                    </div>
+                </div>
+
+                <div class="food-tag">🍱 Food Included</div>
+                <a href="#" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- Warriors Gold -->
+            <div class="card animate-in">
+                <div class="card-number">04</div>
+                <span class="card-icon">🗺️</span>
+                <span class="card-category">Treasure Hunt</span>
+                <h3 class="card-title">Warriors Gold</h3>
+                
+                <div class="card-prize">
+                    <div class="total-label">Total Prize Pool</div>
+                    <div class="total-amount">₹15,000</div>
+                    <div class="prize-split">
+                        <div class="prize-item">
+                            <div class="icon">🥇</div>
+                            <div class="rank">Winner</div>
+                            <div class="value">₹10,000</div>
+                        </div>
+                        <div class="prize-item">
+                            <div class="icon">🥈</div>
+                            <div class="rank">Runner-up</div>
+                            <div class="value">₹5,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span class="label">Registration</span>
+                        <span class="value">₹800/-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Team Size</span>
+                        <span class="value">4 Members</span>
+                    </div>
+                </div>
+
+                <div class="food-tag">🍱 Food Included</div>
+                <a href="#" class="register-btn">Register Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spot Events Section -->
+    <section class="section" id="spot-events">
+        <button class="back-btn" onclick="showHero()">← Back</button>
+        
+        <div class="section-header">
+            <div class="kanji">遊</div>
+            <h2>QUICK GAMES</h2>
+            <p>Win ₹2,000 Each</p>
+            <div class="line"></div>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Spot Dance -->
+            <div class="card animate-in">
+                <span class="card-icon">💃</span>
+                <span class="card-category">Dance</span>
+                <h3 class="card-title">Spot Dance</h3>
+                
+                <div class="card-prize">
+                    <div class="total-label">Winner Prize</div>
+                    <div class="total-amount">₹2,000</div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span class="label">Registration</span>
+                        <span class="value">₹100/-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Participation</span>
+                        <span class="value">Individual</span>
+                    </div>
+                </div>
+
+                <a href="#" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- Flash Talk -->
+            <div class="card animate-in">
+                <span class="card-icon">🎤</span>
+                <span class="card-category">Speaking</span>
+                <h3 class="card-title">Flash Talk</h3>
+                
+                <div class="card-prize">
+                    <div class="total-label">Winner Prize</div>
+                    <div class="total-amount">₹2,000</div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span class="label">Registration</span>
+                        <span class="value">₹100/-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Participation</span>
+                        <span class="value">Individual</span>
+                    </div>
+                </div>
+
+                <a href="#" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- E-Football -->
+            <div class="card animate-in">
+                <span class="card-icon">⚽</span>
+                <span class="card-category">Gaming</span>
+                <h3 class="card-title">E-Football</h3>
+                
+                <div class="card-prize">
+                    <div class="total-label">Winner Prize</div>
+                    <div class="total-amount">₹2,000</div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span class="label">Registration</span>
+                        <span class="value">₹100/-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Participation</span>
+                        <span class="value">Individual</span>
+                    </div>
+                </div>
+
+                <a href="#" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- Mini Militia -->
+            <div class="card animate-in">
+                <span class="card-icon">🎯</span>
+                <span class="card-category">Team Gaming</span>
+                <h3 class="card-title">Mini Militia</h3>
+                
+                <div class="card-prize">
+                    <div class="total-label">Winner Prize</div>
+                    <div class="total-amount">₹2,000</div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span class="label">Registration</span>
+                        <span class="value">₹400/-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Team Size</span>
+                        <span class="value">4 Members</span>
+                    </div>
+                </div>
+
+                <a href="#" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- Reel Making -->
+            <div class="card animate-in">
+                <span class="card-icon">📱</span>
+                <span class="card-category">Creative</span>
+                <h3 class="card-title">Reel Making</h3>
+                
+                <div class="card-prize">
+                    <div class="total-label">Winner Prize</div>
+                    <div class="total-amount">₹2,000</div>
+                </div>
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <span class="label">Registration</span>
+                        <span class="value">₹100/-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Participation</span>
+                        <span class="value">Individual</span>
+                    </div>
+                </div>
+
+                <a href="#" class="register-btn">Register Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-header">
+            <div class="kanji">連</div>
+            <h2>CONTACT</h2>
+            <p>Reach Out</p>
+            <div class="line"></div>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card animate-in">
+                <h3>👨‍🎓 Student Coordinators</h3>
+                <div class="contact-person">
+                    <div class="name">Raifa</div>
+                    <a href="tel:+916235774418">+91 62357 74418</a>
+                </div>
+                <div class="contact-person">
+                    <div class="name">Shahil</div>
+                    <a href="tel:+918891883204">+91 88918 83204</a>
+                </div>
+            </div>
+
+            <div class="contact-card animate-in">
+                <h3>📞 Helpline</h3>
+                <div class="contact-person">
+                    <div class="name">Rasmiya</div>
+                    <a href="tel:+919567139667">+91 95671 39667</a>
+                </div>
+                <div class="contact-person">
+                    <div class="name">Shahsil</div>
+                    <a href="tel:+919745261486">+91 97452 61486</a>
+                </div>
+            </div>
+
+            <div class="contact-card animate-in">
+                <h3>👩‍🏫 Staff Coordinator</h3>
+                <div class="contact-person">
+                    <div class="name">Dr. Shafna T</div>
+                    <a href="tel:+919809802834">+91 98098 02834</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">NEEV 2025</div>
+        <div class="footer-divider"></div>
+        <div class="footer-info">
+            Department of Advertising & Sales Management<br>
+            MAMO College, Manassery, Mukkam<br><br>
+            © 2025 NEEV Management Fest
+        </div>
+    </footer>
+
+    <script>
+        // Create Falling Leaves
+        function createLeaves() {
+            const container = document.getElementById('leafContainer');
+            const leafCount = 20;
+            const leafSVG = `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/></svg>`;
+
+            for (let i = 0; i < leafCount; i++) {
+                const leaf = document.createElement('div');
+                leaf.className = 'leaf';
+                leaf.innerHTML = leafSVG;
+                leaf.style.left = Math.random() * 100 + '%';
+                leaf.style.animationDuration = (Math.random() * 10 + 12) + 's';
+                leaf.style.animationDelay = Math.random() * 15 + 's';
+                
+                const size = Math.random() * 15 + 12;
+                leaf.querySelector('svg').style.width = size + 'px';
+                leaf.querySelector('svg').style.height = size + 'px';
+                leaf.querySelector('svg').style.opacity = Math.random() * 0.5 + 0.3;
+                
+                container.appendChild(leaf);
+            }
+        }
+
+        // Show Section
+        function showSection(sectionId) {
+            document.getElementById('hero').style.display = 'none';
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById('contact').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Trigger animations
+            setTimeout(() => {
+                document.querySelectorAll('.animate-in').forEach((el, i) => {
+                    setTimeout(() => el.classList.add('visible'), i * 100);
+                });
+            }, 100);
+        }
+
+        // Show Hero
+        function showHero() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('hero').style.display = 'flex';
+            document.getElementById('contact').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Reset animations
+            document.querySelectorAll('.animate-in').forEach(el => el.classList.remove('visible'));
+        }
+
+        // Ripple Effect
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = event.clientX - rect.left - size / 2 + 'px';
+            ripple.style.top = event.clientY - rect.top - size / 2 + 'px';
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // Card Mouse Follow Effect
+        function handleCardMouseMove(e) {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--mouse-x', x + '%');
+            card.style.setProperty('--mouse-y', y + '%');
+        }
+
+        // Scroll Animation
+        function handleScrollAnimation() {
+            document.querySelectorAll('.animate-in').forEach((el, i) => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    setTimeout(() => el.classList.add('visible'), i * 80);
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createLeaves();
+            
+            // Add ripple to buttons
+            document.querySelectorAll('.big-btn, .register-btn, .back-btn').forEach(btn => {
+                btn.addEventListener('click', createRipple);
+            });
+            
+            // Add mouse follow to cards
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mousemove', handleCardMouseMove);
+            });
+            
+            // Initial scroll check
+            handleScrollAnimation();
+        });
+
+        window.addEventListener('scroll', handleScrollAnimation);
+
+        // Touch feedback for mobile
+        document.querySelectorAll('.card, .contact-card').forEach(el => {
+            el.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            el.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+    </script>
 </body>
 </html>
