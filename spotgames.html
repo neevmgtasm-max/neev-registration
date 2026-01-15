@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spot Games | NEEV 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #8B0000, #DC143C);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #DC143C, #FF4500);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .leaf {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fall linear forwards;
+        }
+
+        .leaf::before {
+            content: '🍁';
+            font-size: 20px;
+            filter: drop-shadow(0 0 5px rgba(220, 20, 60, 0.5));
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            font-size: 16px;
+            animation: floatDown linear forwards;
+        }
+
+        @keyframes floatDown {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #DC143C;
+            text-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+            letter-spacing: 3px;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #8B0000, #DC143C);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
+        }
+
+        .page-header {
+            padding: 140px 5% 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .japanese-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(139, 0, 0, 0.03) 10px,
+                rgba(139, 0, 0, 0.03) 20px
+            );
+            pointer-events: none;
+        }
+
+        .page-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .page-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            color: #888;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+        }
+
+        .total-pool-banner {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.3), rgba(220, 20, 60, 0.2));
+            border: 2px solid #DC143C;
+            border-radius: 15px;
+            padding: 20px 50px;
+        }
+
+        .total-pool-banner h3 {
+            color: #ccc;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .total-pool-banner .amount {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .games-section {
+            padding: 40px 5% 80px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #8B0000, #DC143C, #FF4500);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: #DC143C;
+            box-shadow: 0 20px 40px rgba(220, 20, 60, 0.2);
+        }
+
+        .game-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .game-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #DC143C;
+            margin-bottom: 20px;
+        }
+
+        .game-prize {
+            background: rgba(139, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid rgba(139, 0, 0, 0.2);
+        }
+
+        .prize-label {
+            font-size: 0.8rem;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        .prize-value {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .game-details {
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-icon {
+            font-size: 1.2rem;
+        }
+
+        .detail-text {
+            color: #ccc;
+        }
+
+        .team-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4B0082, #8B008B);
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+
+        .register-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #8B0000, #DC143C);
+            color: #ffffff;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 10px;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .register-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.4);
+        }
+
+        .register-btn:hover::before {
+            left: 100%;
+        }
+
+        .info-section {
+            background: linear-gradient(180deg, transparent, rgba(139, 0, 0, 0.1));
+            padding: 60px 5%;
+        }
+
+        .info-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .info-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #DC143C;
+            margin-bottom: 30px;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(139, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: #DC143C;
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .contact-title {
+            font-family: 'Cinzel', serif;
+            color: #DC143C;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .contact-info {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        .contact-info a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: #DC143C;
+        }
+
+        .footer {
+            background: #0a0a0a;
+            padding: 40px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #DC143C;
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 4%;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .back-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+
+            .page-header {
+                padding: 120px 4% 40px;
+            }
+
+            .page-icon {
+                font-size: 60px;
+            }
+
+            .total-pool-banner {
+                padding: 15px 30px;
+            }
+
+            .total-pool-banner .amount {
+                font-size: 2rem;
+            }
+
+            .games-section {
+                padding: 30px 4% 60px;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">NEEV 2025</a>
+        <a href="index.html" class="back-btn">← Back to Home</a>
+    </nav>
+
+    <header class="page-header">
+        <div class="japanese-pattern"></div>
+        <div class="page-icon">🎮</div>
+        <h1 class="page-title">Spot Games</h1>
+        <p class="page-subtitle">Quick Fire Battles ⚡</p>
+        <div class="total-pool-banner">
+            <h3>TOTAL PRIZE POOL</h3>
+            <div class="amount">₹10,000</div>
+        </div>
+    </header>
+
+    <section class="games-section">
+        <div class="games-grid">
+            <!-- Spot Dance -->
+            <div class="game-card animate-in">
+                <div class="game-icon">💃</div>
+                <h3 class="game-title">Spot Dance</h3>
+                <div class="game-prize">
+                    <div class="prize-label">🏆 WINNER PRIZE</div>
+                    <div class="prize-value">₹2,000</div>
+                </div>
+                <div class="game-details">
+                    <div class="detail-row">
+                        <span class="detail-icon">🧑</span>
+                        <span class="detail-text">Individual Participation</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">💰</span>
+                        <span class="detail-text">Registration Fee: ₹100/-</span>
+                    </div>
+                </div>
+                <a href="YOUR_SPOT_DANCE_FORM_LINK" target="_blank" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- Flash Talk -->
+            <div class="game-card animate-in">
+                <div class="game-icon">🎤</div>
+                <h3 class="game-title">Flash Talk</h3>
+                <div class="game-prize">
+                    <div class="prize-label">🏆 WINNER PRIZE</div>
+                    <div class="prize-value">₹2,000</div>
+                </div>
+                <div class="game-details">
+                    <div class="detail-row">
+                        <span class="detail-icon">🧑</span>
+                        <span class="detail-text">Individual Participation</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">💰</span>
+                        <span class="detail-text">Registration Fee: ₹100/-</span>
+                    </div>
+                </div>
+                <a href="YOUR_FLASH_TALK_FORM_LINK" target="_blank" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- E-Football -->
+            <div class="game-card animate-in">
+                <div class="game-icon">⚽</div>
+                <h3 class="game-title">E-Football</h3>
+                <div class="game-prize">
+                    <div class="prize-label">🏆 WINNER PRIZE</div>
+                    <div class="prize-value">₹2,000</div>
+                </div>
+                <div class="game-details">
+                    <div class="detail-row">
+                        <span class="detail-icon">🧑</span>
+                        <span class="detail-text">Individual Participation</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">💰</span>
+                        <span class="detail-text">Registration Fee: ₹100/-</span>
+                    </div>
+                </div>
+                <a href="YOUR_EFOOTBALL_FORM_LINK" target="_blank" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- Mini Militia -->
+            <div class="game-card animate-in">
+                <div class="game-icon">🔫</div>
+                <h3 class="game-title">Mini Militia</h3>
+                <div class="game-prize">
+                    <div class="prize-label">🏆 WINNER PRIZE</div>
+                    <div class="prize-value">₹2,000</div>
+                </div>
+                <div class="game-details">
+                    <div class="detail-row">
+                        <span class="detail-icon">👥</span>
+                        <span class="detail-text">Team of 4 Members</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">💰</span>
+                        <span class="detail-text">Registration Fee: ₹400/- per team</span>
+                    </div>
+                </div>
+                <a href="YOUR_MINIMILITIA_FORM_LINK" target="_blank" class="register-btn">Register Now</a>
+            </div>
+
+            <!-- Reel Making -->
+            <div class="game-card animate-in">
+                <div class="game-icon">🎬</div>
+                <h3 class="game-title">Reel Making</h3>
+                <div class="game-prize">
+                    <div class="prize-label">🏆 WINNER PRIZE</div>
+                    <div class="prize-value">₹2,000</div>
+                </div>
+                <div class="game-details">
+                    <div class="detail-row">
+                        <span class="detail-icon">🧑</span>
+                        <span class="detail-text">Individual Participation</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">💰</span>
+                        <span class="detail-text">Registration Fee: ₹100/-</span>
+                    </div>
+                </div>
+                <a href="YOUR_REELMAKING_FORM_LINK" target="_blank" class="register-btn">Register Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="info-container">
+            <h2 class="info-title">📞 Contact Us</h2>
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-icon">👨‍🎓</div>
+                    <h3 class="contact-title">Student Coordinators</h3>
+                    <div class="contact-info">
+                        <p><strong>Raifa:</strong> <a href="tel:+916235774418">+91 62357 74418</a></p>
+                        <p><strong>Shahil:</strong> <a href="tel:+918891883204">+91 88918 83204</a></p>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3 class="contact-title">Helpline</h3>
+                    <div class="contact-info">
+                        <p><strong>Rasmiya:</strong> <a href="tel:+919567139667">+91 95671 39667</a></p>
+                        <p><strong>Shahsil:</strong> <a href="tel:+919745261486">+91 97452 61486</a></p>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">👩‍🏫</div>
+                    <h3 class="contact-title">Staff Coordinator</h3>
+                    <div class="contact-info">
+                        <p><strong>Dr. Shafna T</strong></p>
+                        <p><a href="tel:+919809802834">+91 98098 02834</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-logo">⛩️ NEEV 2025</div>
+        <p class="footer-text">Department of Advertising & Sales Management</p>
+        <p class="footer-text">MAMO College, Manassery, Mukkam</p>
+    </footer>
+
+    <script>
+        // Falling Leaves Effect
+        function createLeaf() {
+            const leaf = document.createElement('div');
+            leaf.className = 'leaf';
+            leaf.style.left = Math.random() * 100 + 'vw';
+            leaf.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            leaf.style.opacity = Math.random() * 0.5 + 0.5;
+            document.body.appendChild(leaf);
+            setTimeout(() => leaf.remove(), 10000);
+        }
+        setInterval(createLeaf, 800);
+
+        // Cherry Blossom
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.innerHTML = Math.random() > 0.5 ? '🌸' : '✿';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            particle.style.fontSize = (Math.random() * 10 + 12) + 'px';
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 14000);
+        }
+        setInterval(createParticle, 1500);
+
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.game-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
